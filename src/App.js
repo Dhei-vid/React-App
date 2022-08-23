@@ -12,6 +12,7 @@ class App extends Component {
     // this just initializes the state
     this.state = {
       monsters: [],
+      searchField: "",
     };
 
     // console.log("constructor");
@@ -39,9 +40,25 @@ class App extends Component {
       });
   }
 
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLocaleLowerCase();
+    this.setState(() => {
+      return { searchField };
+    });
+  };
+
   // (2) Render runs after the constructor
   render() {
     // console.log("render");
+
+    // So we do not keep using this.state, we can destructure to pull out data we need
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+
+    const filteredMonsters = monsters.filter((data) => {
+      return data.name.toLocaleLowerCase().includes(searchField);
+    });
+
     return (
       <div className="App">
         {/* In the input box we need to detect changes made to the text area with the onChange event */}
@@ -49,20 +66,10 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="search monsters"
-          onChange={(event) => {
-            console.log(event.target.value);
-            const searchString = event.target.value.toLocaleLowerCase();
-            const filteredMonsters = this.state.monsters.filter((data) => {
-              return data.name.toLocaleLowerCase().includes(searchString);
-            });
-
-            this.setState(() => {
-              return { monsters: filteredMonsters };
-            });
-          }}
+          onChange={onSearchChange}
         />
 
-        {this.state.monsters.map((element) => {
+        {filteredMonsters.map((element) => {
           return (
             <div key={element.id}>
               <h1> {element.name} </h1>
