@@ -1,6 +1,7 @@
 import { Component } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
+import CardList from "./components/cardList/cardList-component";
 
 // Class component of rendering with react
 class App extends Component {
@@ -69,13 +70,9 @@ class App extends Component {
           onChange={onSearchChange}
         />
 
-        {filteredMonsters.map((element) => {
-          return (
-            <div key={element.id}>
-              <h1> {element.name} </h1>
-            </div>
-          );
-        })}
+        {/* all components must have the first letter capitalized and must be in
+        camelcase */}
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
