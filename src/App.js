@@ -50,8 +50,6 @@ class App extends Component {
 
   // (2) Render runs after the constructor
   render() {
-    // console.log("render");
-
     // So we do not keep using this.state, we can destructure to pull out data we need
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
