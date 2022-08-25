@@ -2,6 +2,7 @@ import { Component } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import CardList from "./components/cardList/cardList-component";
+import SearchBox from "./components/searchBox/searchBox-component";
 
 // Class component of rendering with react
 class App extends Component {
@@ -27,14 +28,9 @@ class App extends Component {
         return res.json();
       })
       .then((users) => {
-        this.setState(
-          () => {
-            return { monsters: users };
-          },
-          () => {
-            // console.log(this.state);
-          }
-        );
+        this.setState(() => {
+          return { monsters: users };
+        });
       })
       .catch((err) => {
         console.error("An error occurred", err);
@@ -50,6 +46,7 @@ class App extends Component {
 
   // (2) Render runs after the constructor
   render() {
+    // console.log("Render from cardList 1");
     // So we do not keep using this.state, we can destructure to pull out data we need
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
@@ -61,15 +58,16 @@ class App extends Component {
     return (
       <div className="App">
         {/* In the input box we need to detect changes made to the text area with the onChange event */}
-        <input
+        <SearchBox
           className="search-box"
-          type="search"
-          placeholder="search monsters"
-          onChange={onSearchChange}
+          onChangeHandler={onSearchChange}
+          placeholder={"search monster"}
         />
+        <h1 className="app--title"> Monsters 🤖 Rolodex</h1>
 
-        {/* all components must have the first letter capitalized and must be in
-        camelcase */}
+        {/* - all components must have the first letter capitalized and must be in camelcase 
+            - monsters = {filteredMonsters} is an example of a prop. 
+        */}
         <CardList monsters={filteredMonsters} />
       </div>
     );
